@@ -1,0 +1,316 @@
+/* ================= BRAIN DUMP MODULE ================= */
+
+#bd-root {
+    width: 100%;
+    min-height: calc(100vh - 64px);
+    display: flex;
+    flex-direction: column;
+}
+
+.bd-view { width: 100%; }
+
+/* ---- Bucket grid view ---- */
+#bd-bucket-view {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 24px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.bd-bucket-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.bd-bucket-header h1 {
+    color: white;
+    font-size: 28px;
+    letter-spacing: 0.5px;
+}
+
+.bd-btn-primary {
+    border: none;
+    background: #00bc00;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.bd-btn-primary:hover { background: #009900; }
+
+.bd-btn-ghost {
+    border: none;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    cursor: pointer;
+    padding: 8px 10px;
+}
+.bd-btn-ghost:hover { color: white; }
+
+.bd-bucket-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+}
+
+.bd-bucket-card {
+    --accent: #00bc00;
+    position: relative;
+    background: hsl(0, 0%, 25%);
+    border-left: 4px solid var(--accent);
+    border-radius: 12px;
+    padding: 18px 16px;
+    cursor: pointer;
+    transition: transform 0.15s, background 0.15s;
+}
+.bd-bucket-card:hover {
+    background: hsl(0, 0%, 28%);
+    transform: translateY(-2px);
+}
+.bd-bucket-card h3 {
+    color: white;
+    font-size: 16px;
+    margin-bottom: 8px;
+    word-break: break-word;
+    padding-right: 16px;
+}
+.bd-bucket-count {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 12px;
+}
+.bd-bucket-delete {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    border: none;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 18px;
+    cursor: pointer;
+    line-height: 1;
+}
+.bd-bucket-delete:hover { color: #ff4444; }
+
+.bd-empty {
+    color: rgba(255, 255, 255, 0.4);
+    text-align: center;
+    padding: 40px 0;
+    grid-column: 1 / -1;
+}
+
+/* ---- Canvas / board view ---- */
+#bd-canvas-view {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 64px);
+}
+
+.bd-canvas-topbar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 20px;
+    background: hsl(0, 0%, 16%);
+    flex-wrap: wrap;
+}
+.bd-canvas-topbar h2 {
+    color: white;
+    font-size: 17px;
+    flex: 1;
+    min-width: 100px;
+}
+
+.bd-add-bar {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+.bd-add-bar input {
+    border: none;
+    background: hsl(0, 0%, 28%);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    outline: none;
+    width: 220px;
+}
+.bd-add-bar input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+.bd-type-toggle {
+    border: none;
+    background: hsl(0, 0%, 35%);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    cursor: pointer;
+    min-width: 62px;
+    transition: background 0.2s;
+}
+.bd-type-toggle[data-type="heading"] { background: #00bc00; }
+
+.bd-add-btn {
+    border: none;
+    background: #00bc00;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.bd-add-btn:hover { background: #009900; }
+
+.bd-hint {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 11px;
+    text-align: center;
+    padding: 5px 0;
+    background: hsl(0, 0%, 16%);
+    margin: 0;
+}
+
+#bd-canvas-viewport {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    background-color: hsl(0, 0%, 14%);
+    background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+    background-size: 24px 24px;
+    cursor: grab;
+}
+#bd-canvas-viewport:active { cursor: grabbing; }
+
+#bd-canvas-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2200px;
+    transform-origin: 0 0;
+}
+
+#bd-bands {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    pointer-events: none;
+}
+.bd-band {
+    position: absolute;
+    left: 0;
+    right: 0;
+    border-top: 1px dashed rgba(255, 255, 255, 0.12);
+}
+.bd-band-label {
+    position: absolute;
+    top: 6px;
+    left: 16px;
+    color: rgba(255, 255, 255, 0.28);
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.bd-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2200px;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+}
+.bd-link {
+    stroke: rgba(0, 188, 0, 0.55);
+    stroke-width: 2;
+    pointer-events: stroke;
+    cursor: pointer;
+}
+.bd-link:hover { stroke: #ff4444; }
+.bd-link-temp {
+    stroke: rgba(255, 255, 255, 0.5);
+    stroke-dasharray: 5 4;
+}
+
+#bd-nodes {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.bd-node {
+    position: absolute;
+    max-width: 170px;
+    background: hsl(0, 0%, 30%);
+    border-radius: 999px;
+    padding: 10px 14px;
+    color: white;
+    font-size: 13px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.bd-node:active,
+.bd-node.bd-dragging { cursor: grabbing; z-index: 5; }
+
+.bd-node-heading {
+    border-left: 4px solid #00bc00;
+    background: hsl(0, 0%, 22%);
+    font-weight: bold;
+    font-size: 14px;
+    border-radius: 10px;
+    max-width: 210px;
+}
+
+.bd-node-text {
+    flex: 1;
+    outline: none;
+    word-break: break-word;
+}
+.bd-node-text[contenteditable="true"] {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 4px;
+    padding: 0 2px;
+}
+
+.bd-node-delete {
+    border: none;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.35);
+    font-size: 14px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    flex-shrink: 0;
+}
+.bd-node-delete:hover { color: #ff4444; }
+
+.bd-node-handle {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #00bc00;
+    cursor: crosshair;
+    flex-shrink: 0;
+}
+.bd-node-handle:hover {
+    background: #00e600;
+    box-shadow: 0 0 0 4px rgba(0, 188, 0, 0.25);
+}
