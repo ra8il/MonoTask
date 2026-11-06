@@ -6,17 +6,7 @@ if(isset($_SESSION['username'])) {
     exit();
 }
 
-$host = 'localhost';
-$user = 'demouser';
-$pass = "r1h2lj3i4";
-$db = "demodb";
-
-try {
-    $con = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
-    $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch(PDOException $e) {
-    die("Connection Not Established! " . $e->getMessage());
-}
+require 'db.php';
 
 $error = '';
 
@@ -33,6 +23,7 @@ if(isset($_POST['submit'])) {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if($user && password_verify($password, $user['password'])) {
+            session_regenerate_id(true);
             $_SESSION['username'] = $username;
             header("Location: todo.php");
             exit();

@@ -530,20 +530,7 @@ $config = [
 </head>
 <body>
 
-    <nav>
-        <div class="nav-left">
-            <span class="nav-brand">📝 MyApp</span>
-            <a href="todo.php" class="nav-link">📝 Todo</a>
-            <a href="eisenhower.php" class="nav-link active">⚡ Eisenhower</a>
-            <a href="pomodoro.php" class="nav-link">🍅 Pomodoro</a>
-        </div>
-        <div class="nav-right">
-            <span class="nav-welcome">
-                👋 <?php echo htmlspecialchars($username); ?>
-            </span>
-            <a href="logout.php" class="nav-logout">Logout</a>
-        </div>
-    </nav>
+<?php include 'includes/nav.php'; ?>
 
     <div class="page-header">
         <h1>⚡ Eisenhower Matrix</h1>

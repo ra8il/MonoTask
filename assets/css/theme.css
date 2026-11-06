@@ -1,0 +1,89 @@
+:root {
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* ---------- cards: gentle zoom ----------
+   To include another card type later, add its class to this list. */
+.task-card,
+.quadrant,
+.bd-pit-card,
+.stat-card {
+  transition:
+    scale 0.2s var(--ease),
+    box-shadow 0.25s;
+}
+
+.task-card:hover,
+.bd-pit-card:hover,
+.stat-card:hover {
+  scale: 1.01;
+}
+
+/* quadrants are big, so they zoom even less */
+.quadrant:hover {
+  scale: 1.006;
+}
+
+/* ---------- navbar ---------- */
+.nav-link,
+.nav-logout {
+  display: inline-block; /* zoom only works on block-type elements */
+  transition:
+    scale 0.15s var(--ease),
+    background 0.2s,
+    color 0.2s;
+}
+.nav-link:hover,
+.nav-logout:hover {
+  scale: 1.04;
+}
+
+/* ---------- buttons ---------- */
+button:not(:disabled) {
+  transition:
+    scale 0.15s var(--ease),
+    background 0.2s,
+    filter 0.15s;
+}
+button:not(:disabled):hover {
+  scale: 1.03;
+}
+button:not(:disabled):active {
+  scale: 0.97;
+}
+
+/* ---------- inputs: soft focus ring ---------- */
+input,
+select,
+textarea {
+  transition:
+    box-shadow 0.2s,
+    background 0.2s;
+}
+input:focus,
+select:focus,
+textarea:focus {
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.18);
+}
+
+/* ---------- no zoom while dragging ---------- */
+.sortable-chosen,
+.sortable-drag {
+  scale: 1 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+  .task-card:hover,
+  .quadrant:hover,
+  .bd-pit-card:hover,
+  .stat-card:hover,
+  .nav-link:hover,
+  .nav-logout:hover,
+  button:hover {
+    scale: 1;
+  }
+}

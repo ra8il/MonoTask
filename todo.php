@@ -94,6 +94,7 @@ $priority_config = [
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo List</title>
     <link rel="stylesheet" href="assets/css/todo.css">
+    <link rel="stylesheet" href="assets/css/theme.css">
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 </head>
 <body>
@@ -279,5 +280,6 @@ $priority_config = [
 </div>
 
 <script src="assets/js/todo.js"></script>
+<script src="assets/js/ajax-subtasks.js"></script>
 </body>
 </html>
